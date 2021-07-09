@@ -9,7 +9,7 @@ target triple = "armv7m-unknown-unknown-eabi"
 %"internal/task.state" = type { i32, i32* }
 %runtime.chanSelectState = type { %runtime.channel*, i8* }
 
-declare noalias nonnull i8* @runtime.alloc(i32, i8*, i8*)
+declare noalias nonnull i8* @runtime.alloc(i32, i8*, i8*, i8*)
 
 ; Function Attrs: nounwind
 define hidden void @main.init(i8* %context, i8* %parentHandle) unnamed_addr #0 {
@@ -64,10 +64,10 @@ entry:
 ; Function Attrs: nounwind
 define hidden void @main.closureFunctionGoroutine(i8* %context, i8* %parentHandle) unnamed_addr #0 {
 entry:
-  %n = call i8* @runtime.alloc(i32 4, i8* undef, i8* null) #0
+  %n = call i8* @runtime.alloc(i32 4, i8* null, i8* undef, i8* null) #0
   %0 = bitcast i8* %n to i32*
   store i32 3, i32* %0, align 4
-  %1 = call i8* @runtime.alloc(i32 8, i8* undef, i8* null) #0
+  %1 = call i8* @runtime.alloc(i32 8, i8* null, i8* undef, i8* null) #0
   %2 = bitcast i8* %1 to i32*
   store i32 5, i32* %2, align 4
   %3 = getelementptr inbounds i8, i8* %1, i32 4
@@ -105,7 +105,7 @@ declare void @runtime.printint32(i32, i8*, i8*)
 ; Function Attrs: nounwind
 define hidden void @main.funcGoroutine(i8* %fn.context, void ()* %fn.funcptr, i8* %context, i8* %parentHandle) unnamed_addr #0 {
 entry:
-  %0 = call i8* @runtime.alloc(i32 12, i8* undef, i8* null) #0
+  %0 = call i8* @runtime.alloc(i32 12, i8* null, i8* undef, i8* null) #0
   %1 = bitcast i8* %0 to i32*
   store i32 5, i32* %1, align 4
   %2 = getelementptr inbounds i8, i8* %0, i32 4
